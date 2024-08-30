@@ -12,6 +12,8 @@ def download_image(url, path):
         response = requests.get(url)
         response.raise_for_status()  # 确保请求成功
         with open(path, 'wb') as f:
+            #'wb'：这是一个组合模式，'w' 表示写入模式，如果文件已存在，则其内容会被覆盖；
+            # 如果文件不存在，则会创建一个新文件。'b' 表示二进制模式，用于写入二进制数据（例如，图片、视频等）。
             f.write(response.content)
         print(f"图片下载成功：{path}")
     except Exception as e:
@@ -22,13 +24,11 @@ def worker(url, directory, num_images, pause_time):
     for _ in range(num_images):
         # 暂停指定的时间
         time.sleep(pause_time)
-
         # 使用时间戳和随机数生成唯一的文件名
         timestamp = int(time.time())
-        random_number = random.randint(0, 1000)
+        random_number = random.randint( 1,90000)#生成指定范围内的随机数
         image_name = f"image_{timestamp}_{random_number}.jpg"
         image_path = os.path.join(directory, image_name)
-
         # 下载图片
         download_image(url, image_path)
 
